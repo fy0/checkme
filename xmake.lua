@@ -1,5 +1,6 @@
 
 set_project("checkme")
+set_modes("debug", "release")
 
 -- the debug mode
 if is_mode("debug") then
@@ -31,7 +32,6 @@ target("checkme")
     set_kind("binary")
     set_basename("checkme_$(plat)_$(arch)_$(mode)_$(kind)")
 
-
     -- add files
     add_files("src/*.c")
     add_files("src/*.cpp")
@@ -49,12 +49,17 @@ target("checkme")
     add_linkdirs("deps/zmq/lib")
 
     add_includedirs("deps/gl3w")
+    add_includedirs("deps/msgpack11")
+    add_linkdirs("deps/msgpack11")
 
     add_includedirs("deps/imgui-1.50")
     add_files("deps/imgui-1.50/*.cpp")
+    
+    add_headers("deps/utfconvert/*.h")
+    add_files("deps/utfconvert/*.c")
 
     add_links('kernel32', 'user32', 'gdi32', 'winspool', 'comdlg32', 'advapi32', 'shell32', 'ole32', 'oleaut32', 'uuid', 'OpenGL32', 'winmm', 'psapi', 'shlwapi', 'MSVCRT')
-    add_links('glfw3', 'libzmq-v120-mt-4_0_4')
+    add_links('glfw3', 'libzmq', 'msgpack11')
 
 
 target_end()
